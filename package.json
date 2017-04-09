@@ -1,0 +1,16 @@
+{
+  "name": "mytodo",
+  "version": "1.0.0",
+  "description": "todo应用",
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "store": "^2.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "李海涛",
+  "license": "ISC"
+}
