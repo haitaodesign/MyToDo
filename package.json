@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "jquery": "^3.2.1",
+    "normalize.css": "^6.0.0",
     "store": "^2.0.4"
   },
   "devDependencies": {},
