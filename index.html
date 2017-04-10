@@ -3,54 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>李海涛的清单应用</title>
-	<link rel="stylesheet" href="node_modules/normalize.css">
+	<link rel="stylesheet" href="node_modules/normalize.css/normalize.css">
 	<link rel="stylesheet" href="css/base.css">
 </head>
 <body>
 	<div class="container">
 		<h1>My ToDo</h1>
 		<div class="task-detail-mask"></div>
-		<div class="add-task">
-			<input type="text" placeholder="e.g.请输入想要做的事情!">
+		<form class="add-task">
+			<input name="content" type="text" placeholder="e.g.请输入想要做的事情!" autofocus="autofocus" autocomplete="off">
 			<button type="submit">submit</button>
-		</div>
+		</form>
 		<div class="task-list">
-			<div class="task-item">
-				<span><input type="checkbox"></span>
-				<span class="task-content">item content 1</span>
-				<span>删除</span>
-				<span>详请</span>
-			</div>
-			<div class="task-item">
-				<span><input type="checkbox"></span>
-				<span class="task-content">item content 1</span>
-				<span>删除</span>
-				<span>详请</span>
-			</div>
-			<div class="task-item">
-				<span><input type="checkbox"></span>
-				<span class="task-content">item content 1</span>
-				<span>删除</span>
-				<span>详请</span>
-			</div>
-			<div class="task-item">
-				<span><input type="checkbox"></span>
-				<span class="task-content">item content 1</span>
-				<span>删除</span>
-				<span>详请</span>
-			</div>
-			<div class="task-item">
-				<span><input type="checkbox"></span>
-				<span class="task-content">item content 1</span>
-				<span>删除</span>
-				<span>详请</span>
-			</div>
-			<div class="task-item">
-				<span><input type="checkbox"></span>
-				<span class="task-content">item content 1</span>
-				<span>删除</span>
-				<span>详请</span>
-			</div>
+			
 		</div>
 		<div class="task-detail">
 			<div class="content">
@@ -67,5 +32,8 @@
 			</div>
 		</div>
 	</div>
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="node_modules/store/store.js"></script>
+	<script src="js/index.js"></script>
 </body>
 </html>
