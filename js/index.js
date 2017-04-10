@@ -7,22 +7,22 @@
 	init();
 
 	$form_add_task.on('submit',function (e) {
-		var new_task={};
+		var new_task={},$input;
 		// 禁用默认行为
 		e.preventDefault();
-		new_task.content=$(this).find('input[name=content]').val();
+		$input=$(this).find('input[name=content]')
+		new_task.content=$input.val();
 		if(!new_task.content) return;
 
 		if(add_task(new_task)){
 			render_task_list();
+			$input.val(null);
 		}
 	});
 
 	function add_task(new_task) {
-
 		task_list.push(new_task);
 		store.set('task_list',task_list);
-		console.log('task_list',task_list);
 		return true;
 	}
 
@@ -46,8 +46,10 @@
 		var list_item_tpl='<div class="task-item">'+
 			'<span><input type="checkbox"></span>'+
 			'<span class="task-content">'+data.content+'</span>'+
-			'<span class="antion"> 删除</span>'+
-			'<span class="antion"> 详请</span>'+
+			'<span class="fr">'+
+			'<span class="action"> 删除</span>'+
+			'<span class="action"> 详请</span>'+
+			'</span>'+
 			'</div>';	
 			return list_item_tpl;	
 	}

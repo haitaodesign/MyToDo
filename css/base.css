@@ -63,6 +63,13 @@ button[type=submit]:hover{
 	cursor: pointer;
 	transition: background .2s;
 }
+
+.fr{
+	float: right;
+}
+
+
+
 .task-item:hover{
 	background: #5FB878;
 	color: #fff;
