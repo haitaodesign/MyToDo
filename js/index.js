@@ -7,7 +7,9 @@
 
 	init();
 
-	$form_add_task.on('submit',function (e) {
+	$form_add_task.on('submit',on_add_task_form_submit);
+
+	function on_add_task_form_submit(e) {
 		var new_task={},$input;
 		// 禁用默认行为
 		e.preventDefault();
@@ -19,7 +21,7 @@
 			render_task_list();
 			$input.val(null);
 		}
-	});
+	}
 
 	function listion_task_delete() {
 			$delete_task.on('click',function () {
@@ -32,7 +34,6 @@
 		})
 	}
 
-	
 
 	function add_task(new_task) {
 		task_list.push(new_task);
