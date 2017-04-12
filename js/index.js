@@ -2,12 +2,16 @@
 	'use strict';
 	var $form_add_task=$('.add-task')
 		,task_list=[]
-		,$delete_task
+		,$task_delete_trriger
+		,$task_detail_trriger
+		,$task_detail = $('.task-detail')
+		,$task_detail_mask=$('.task-detail-mask')
 		;
 
 	init();
 
 	$form_add_task.on('submit',on_add_task_form_submit);
+	$task_detail_mask.on('click',hide_task_detail);
 
 	function on_add_task_form_submit(e) {
 		var new_task={},$input;
@@ -23,11 +27,52 @@
 		}
 	}
 
-	function listion_task_delete() {
-			$delete_task.on('click',function () {
+	function listen_task_detail() {
+		$task_detail_trriger.on('click',function () {
 			var $this=$(this);
 			var $item = $this.parent().parent();
-			console.log($item);
+			var index = $item.data('index');
+			show_task_detail(index);
+		})
+	}
+
+	function show_task_detail(index) {
+		render_task_detail(index);
+		$task_detail.show();
+		$task_detail_mask.show();
+	}
+
+	function hide_task_detail() {
+		$task_detail.hide();
+		$task_detail_mask.hide();
+	}
+
+
+	function render_task_detail(index) {
+		if(index === undefined || !task_list[index])
+			return;
+		var item = task_list[index];
+		var tpl ='<div>'
+				+'<div class="content">'
+				+item.content
+				+'</div>'
+				+'<div>'
+			    +'<div class="desc">'
+				+'<textarea value="'+item.desc+'"  cols="20" rows="10"></textarea>'
+				+'</div>'
+				+'</div>'
+				+'<div class="remind">'
+				+'<input type="date">'
+				+'</div>'
+				+'</div>';
+		$task_detail.html(null);
+		$task_detail.html(tpl);
+	}
+
+	function listen_task_delete() {
+			$task_delete_trriger.on('click',function () {
+			var $this=$(this);
+			var $item = $this.parent().parent();
 			var index = $item.data('index');
 			var tmp= confirm('确定删除？');
 			tmp ? delete_task(index) : null;
@@ -49,7 +94,6 @@
 	function delete_task(index) {
 		if(index === undefined || !task_list[index]) return;
 		delete task_list[index];
-		console.log(task_list);
 		refresh_task_list();		
 	}
 
@@ -69,8 +113,10 @@
 			var $task = render_task_item(task_list[i],i);
 			$task_list.append($task);
 		}
-		$delete_task = $('.action.delete');
-		listion_task_delete();
+		$task_delete_trriger = $('.action.delete');
+		$task_detail_trriger = $('.action.detail');
+		listen_task_delete();
+		listen_task_detail();
 	}
 
 	function render_task_item(data,index) {
@@ -80,7 +126,7 @@
 			'<span class="task-content">'+data.content+'</span>'+
 			'<span class="fr">'+
 			'<span class="action delete"> 删除</span>'+
-			'<span class="action"> 详请</span>'+
+			'<span class="action detail"> 详请</span>'+
 			'</span>'+
 			'</div>';	
 			return list_item_tpl;	
