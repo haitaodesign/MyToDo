@@ -6,6 +6,10 @@
 		,$task_detail_trriger
 		,$task_detail = $('.task-detail')
 		,$task_detail_mask=$('.task-detail-mask')
+		,current_index
+		,$update_form
+		,$task_detail_content
+		,$task_detail_content_input
 		;
 
 	init();
@@ -38,8 +42,17 @@
 
 	function show_task_detail(index) {
 		render_task_detail(index);
+		current_index = index;
 		$task_detail.show();
 		$task_detail_mask.show();
+	}
+
+	function update_task(index,data) {
+		if(!index || !task_list[index])
+			return;
+		task_list[index] = data;
+		console.log(task_list);
+		refresh_task_list();
 	}
 
 	function hide_task_detail() {
@@ -52,21 +65,47 @@
 		if(index === undefined || !task_list[index])
 			return;
 		var item = task_list[index];
-		var tpl ='<div>'
+		var tpl ='<form>'
 				+'<div class="content">'
 				+item.content
 				+'</div>'
 				+'<div>'
+				+'<input style="display:none;" type="text" name="content" value ="'+(item.content || " ") +'" />'
+				+'</div>'
+				+'<div>'
 			    +'<div class="desc">'
-				+'<textarea value="'+item.desc+'"  cols="20" rows="10"></textarea>'
+				+'<textarea name="desc" cols="20" rows="10">'+ (item.desc || " ") +'</textarea>'
 				+'</div>'
 				+'</div>'
 				+'<div class="remind">'
-				+'<input type="date">'
+				+'<input name="remind_date" type="date">'
 				+'</div>'
-				+'</div>';
+				+'<div><button type="submit">更新</button></div>'
+				+'</form>';
 		$task_detail.html(null);
 		$task_detail.html(tpl);
+		$update_form=$task_detail.find('form');
+		$task_detail_content = $update_form.find('.content');
+		$task_detail_content_input = $update_form.find('[name=content]');
+
+
+		$task_detail_content.on('dblclick',function () {
+			console.log('1');
+			$task_detail_content_input.show();
+			$task_detail_content.hide();
+		})
+
+		$update_form.on('submit',function (e) {
+			e.preventDefault();
+			var data = {};
+			data.content=$(this).find('[name=content]').val();
+			data.desc = $(this).find('[name=desc]').val();
+			data.remind_date=$(this).find('[name=remind_date]').val();
+			//console.log(data);
+			//console.log(current_index);
+			update_task(current_index,data);
+		})
+
 	}
 
 	function listen_task_delete() {
@@ -101,9 +140,7 @@
 		task_list = store.get('task_list') || [];
 		if(task_list.length){
 			render_task_list();
-
 		}
-
 	}
 
 	function render_task_list() {
@@ -111,7 +148,7 @@
 		$task_list.html('');
 		for (var i = 0; i < task_list.length; i++) {
 			var $task = render_task_item(task_list[i],i);
-			$task_list.append($task);
+			$task_list.prepend($task);
 		}
 		$task_delete_trriger = $('.action.delete');
 		$task_detail_trriger = $('.action.detail');
