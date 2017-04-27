@@ -108,8 +108,6 @@
 			data.content=$(this).find('[name=content]').val();
 			data.desc = $(this).find('[name=desc]').val();
 			data.remind_date=$(this).find('[name=remind_date]').val();
-			//console.log(data);
-			//console.log(current_index);
 			update_task(current_index,data);
 		})
 
@@ -154,6 +152,7 @@
 		var $task_list=$('.task-list');
 		$task_list.html('');
 		for (var i = 0; i < task_list.length; i++) {
+			console.log(i);
 			var $task = render_task_item(task_list[i],i);
 			$task_list.prepend($task);
 		}
@@ -164,7 +163,7 @@
 	}
 
 	function render_task_item(data,index) {
-		if(!data || !index) return;
+		if(!data) return;
 		var list_item_tpl='<div class="task-item" data-index="'+index+'">'+
 			'<span><input type="checkbox"></span>'+
 			'<span class="task-content">'+data.content+'</span>'+
